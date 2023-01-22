@@ -55,19 +55,10 @@ public class Game {
                 .filter(tile -> Objects.nonNull(tile.getPlayer()))
                 .collect(Collectors.groupingBy(Tile::getPlayer));
 
-        Set<Position> topWin = Set.of(TOP_LEFT, TOP_CENTER, TOP_RIGHT);
-        Set<Position> middleWin = Set.of(MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT);
-        Set<Position> bottomWin = Set.of(BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT);
-
         tilesByPlayers.forEach((player, tiles) -> {
             Set<Position> positions = tiles.stream().map(Tile::getPosition).collect(Collectors.toSet());
-            if (positions.containsAll(topWin)) {
-                log.info("JOGADOR VENCEDOR! TOPWIN [{}]", player.getName());
-            } else if (positions.containsAll(middleWin)) {
-                log.info("JOGADOR VENCEDOR! MIDDLEWIN [{}]", player.getName());
-            } else if (positions.containsAll(bottomWin)) {
-                log.info("JOGADOR VENCEDOR! BOTTOMWIN [{}]", player.getName());
-            }
+            Optional.ofNullable(Rules.getMatchedRule(positions))
+                    .ifPresent(rules -> log.info("Jogador [{}] venceu com [{}]", player.getName(), rules.name()));
         });
     }
 
