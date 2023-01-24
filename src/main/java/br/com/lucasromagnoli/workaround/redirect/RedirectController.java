@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static java.util.UUID.randomUUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/testeee")
 public class RedirectController {
 
     private static final Map<String, RedirectMetadata> SHORTED_URL = new HashMap<>();

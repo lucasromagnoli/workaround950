@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class GameController {
 
-
     @PostMapping("/create")
     public ResponseEntity<CreatedGameResponseDTO> createGame(@RequestBody CreateGameRequestDTO createGameRequestDTO) {
 
