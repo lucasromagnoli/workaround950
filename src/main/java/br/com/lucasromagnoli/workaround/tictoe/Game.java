@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static br.com.lucasromagnoli.workaround.tictoe.Position.*;
+import static br.com.lucasromagnoli.workaround.tictoe.Status.RUNNING;
 
 @Slf4j
 @Getter
@@ -17,23 +18,39 @@ import static br.com.lucasromagnoli.workaround.tictoe.Position.*;
 public class Game {
 
     private final UUID id = UUID.randomUUID();
-
     private Player turn;
     private final Board board = new Board();
     private final Player player1;
     private final Player player2;
+    private Player winnerPlayer;
+    private Status status;
 
     public Game(Player player1, Player player2) {
         this.turn = player1;
         this.player1 = player1;
         this.player2 = player2;
+        this.status = RUNNING;
     }
 
-    public void doAction(Position position) {
-        log.info("Executando turno do {}", turn.getName());
-        this.action(board.tile(position));
-        this.rules();
-        this.nextTurn();
+    public void doAction(Player player, Position position) {
+        if (RUNNING.equals(this.status) && this.turn.equals(player)) {
+            log.info("Executando turno do {}", turn.getName());
+            this.action(board.tile(position));
+
+            this.checkRules();
+
+            if (Objects.nonNull(this.winnerPlayer)) {
+                this.endGame();
+                return;
+            }
+
+            this.nextTurn();
+        }
+    }
+
+    private void endGame() {
+        log.info("Jogador [{}] venceu !", this.winnerPlayer.getName());
+        this.status = Status.ENDED;
     }
 
     private void action(Tile tile) {
@@ -50,16 +67,27 @@ public class Game {
         log.info("O turno é: [{}]", turn.getName());
     }
 
-    public void rules() {
-        Map<Player, List<Tile>> tilesByPlayers = this.board.tiles().stream()
+    public void checkRules() {
+        Map<Player, List<Tile>> tilesByPlayers = this.board.tiles()
+                .stream()
                 .filter(tile -> Objects.nonNull(tile.getPlayer()))
                 .collect(Collectors.groupingBy(Tile::getPlayer));
 
-        tilesByPlayers.forEach((player, tiles) -> {
-            Set<Position> positions = tiles.stream().map(Tile::getPosition).collect(Collectors.toSet());
-            Optional.ofNullable(Rules.getMatchedRule(positions))
-                    .ifPresent(rules -> log.info("Jogador [{}] venceu com [{}]", player.getName(), rules.name()));
-        });
+        this.winnerPlayer = tilesByPlayers
+                .entrySet()
+                .stream()
+                .filter(playerListEntry -> {
+                    List<Tile> tiles = playerListEntry.getValue();
+                    Set<Position> positions = tiles
+                            .stream()
+                            .map(Tile::getPosition)
+                            .collect(Collectors.toSet());
+
+                    return Objects.nonNull(Rules.getMatchedRule(positions));
+                })
+                .findFirst()
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
     public static void main(String[] args) {
@@ -68,13 +96,19 @@ public class Game {
 
         Game game = new Game(player1, player2);
 
-
         game.setTurn(player1);
 
-        game.doAction(TOP_LEFT);
-        game.doAction(MIDDLE_LEFT);
-        game.doAction(TOP_CENTER);
-        game.doAction(MIDDLE_CENTER);
-        game.doAction(TOP_RIGHT);
+        game.doAction(player1, TOP_LEFT);
+        game.doAction(player1, MIDDLE_LEFT);
+        game.doAction(player1, TOP_CENTER);
+        game.doAction(player1, MIDDLE_CENTER);
+        game.doAction(player1, TOP_RIGHT);
+        game.doAction(player1, TOP_RIGHT);
+        game.doAction(player1, TOP_RIGHT);
+        game.doAction(player1, TOP_RIGHT);
+        game.doAction(player1, TOP_RIGHT);
+        game.doAction(player1, TOP_RIGHT);
+        game.doAction(player1, TOP_RIGHT);
+        game.doAction(player1, TOP_RIGHT);
     }
 }

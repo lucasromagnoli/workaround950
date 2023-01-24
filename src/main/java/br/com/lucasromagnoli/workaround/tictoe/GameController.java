@@ -40,7 +40,7 @@ public class GameController {
         Position position = Position.valueOf(playerActionRequestDTO.getPosition());
         Game game = UglySession.getGame(player);
 
-        game.doAction(position);
+        game.doAction(player, position);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
