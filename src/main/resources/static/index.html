@@ -1,53 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hello WebSocket</title>
+    <meta charset="UTF-8">
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/main.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/app.js"></script>
+    <script src="/tictoe.js"></script>
+    <title>Tic Toe</title>
+    <style>
+        .container{
+            width: 330px;
+            overflow: hidden;
+            margin: 50px auto 0 auto;
+        }
+
+        .container span{
+            display: block;
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 40px;
+            margin-bottom: 40px;
+        }
+
+        .container .box{
+            float: left;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            transition: all .25s ease-in-out;
+            font-size: 85px;
+            text-align: center;
+            line-height: 100px;
+            cursor: pointer;
+        }
+
+        .container .box:hover{
+            background: rgb(174, 244, 255);
+            color: rgb(108, 108, 108);
+        }
+    </style>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Greetings</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
-        </div>
-    </div>
+<h1>TicToe</h1>
+<div id="connection"></div>
+<div id="lobby">
+    <label for="player2">Player2_ID</label><input type="text" id="player2" class="form-control" placeholder="player2 id">
+    <button id="create-lobby">criar game</button>
+</div>
+<div id="game" class="container">
+    <div class="box" style="border-left: 0; border-top: 0" id="TOP_LEFT"></div>
+    <div class="box" style="border-top: 0" id="TOP_CENTER"></div>
+    <div class="box" style="border-top: 0; border-right: 0" id="TOP_RIGHT"></div>
+    <div class="box" style="border-left: 0" id="MIDDLE_LEFT"></div>
+    <div class="box" id="MIDDLE_CENTER"></div>
+    <div class="box" style="border-right: 0" id="MIDDLE_RIGHT"></div>
+    <div class="box" style="border-left: 0; border-bottom: 0" id="BOTTOM_LEFT"></div>
+    <div class="box" style="border-bottom: 0" id="BOTTOM_CENTER"></div>
+    <div class="box" style="border-right: 0; border-bottom: 0" id="BOTTOM_RIGHT"></div>
 </div>
 </body>
 </html>

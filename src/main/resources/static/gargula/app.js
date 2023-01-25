@@ -1,19 +1,19 @@
 var stompClient = null;
+var playerId = null;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
     if (connected) {
         $("#conversation").show();
-    }
-    else {
+    } else {
         $("#conversation").hide();
     }
     $("#greetings").html("");
 }
 
 function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
+    var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
@@ -23,6 +23,10 @@ function connect() {
         });
         stompClient.subscribe('/user/topic/greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content + '   with/user');
+        });
+        stompClient.subscribe('/user/info/player', function (message) {
+            console.log(`my player id: ${message.body}`);
+            this.playerId = message.body;
         });
     });
 }
@@ -47,8 +51,14 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendName(); });
+    $("#connect").click(function () {
+        connect();
+    });
+    $("#disconnect").click(function () {
+        disconnect();
+    });
+    $("#send").click(function () {
+        sendName();
+    });
 });
 

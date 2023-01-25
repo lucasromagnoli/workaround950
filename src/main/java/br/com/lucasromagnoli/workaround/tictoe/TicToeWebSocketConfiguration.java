@@ -1,5 +1,4 @@
-package br.com.lucasromagnoli.workaround.websocket;
-
+package br.com.lucasromagnoli.workaround.tictoe;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -8,23 +7,21 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-//@EnableWebSocketMessageBroker
-public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
-
-    private final CustomHandshakeHandler customHandshakeHandler;
+@EnableWebSocketMessageBroker
+public class TicToeWebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic", "/info");
-        config.setApplicationDestinationPrefixes("/app");
+        config.enableSimpleBroker("/tictoe");
+        config.setApplicationDestinationPrefixes("/game");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/ws")
-                .setHandshakeHandler(customHandshakeHandler)
+                .setHandshakeHandler(new PlayerHandeShakeHandler())
                 .withSockJS();
     }
 }

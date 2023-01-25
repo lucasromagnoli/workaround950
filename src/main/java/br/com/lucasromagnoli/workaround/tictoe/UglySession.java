@@ -17,8 +17,8 @@ public class UglySession {
     static {
         UUID player1Id = UUID.fromString("c63fdc47-9a77-4a57-b5c0-3577247b58e1");
         UUID player2Id = UUID.fromString("4625d5d8-8555-4a1e-9c00-1cdd51e16b85");
-        UGLY_SESSION_PLAYERS.put(player1Id, new Player(player1Id, "Lucas"));
-        UGLY_SESSION_PLAYERS.put(player2Id, new Player(player2Id, "Artur"));
+        UGLY_SESSION_PLAYERS.put(player1Id, new Player(player1Id));
+        UGLY_SESSION_PLAYERS.put(player2Id, new Player(player2Id));
         log.info("Created ugly players [{}]", UGLY_SESSION_PLAYERS);
     }
 
@@ -34,6 +34,10 @@ public class UglySession {
 
     public static Game getGame(Player player) {
         return UGLY_SESSION_MATCHES.get(player);
+    }
+
+    public static void setPlayer(Player player) {
+        UGLY_SESSION_PLAYERS.put(player.getId(), player);
     }
 
     public static Player getPlayer(String id) {

@@ -91,24 +91,24 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Player player1 = new Player("Lucas");
-        Player player2 = new Player("Arthur");
-
-        Game game = new Game(player1, player2);
-
-        game.setTurn(player1);
-
-        game.doAction(player1, TOP_LEFT);
-        game.doAction(player1, MIDDLE_LEFT);
-        game.doAction(player1, TOP_CENTER);
-        game.doAction(player1, MIDDLE_CENTER);
-        game.doAction(player1, TOP_RIGHT);
-        game.doAction(player1, TOP_RIGHT);
-        game.doAction(player1, TOP_RIGHT);
-        game.doAction(player1, TOP_RIGHT);
-        game.doAction(player1, TOP_RIGHT);
-        game.doAction(player1, TOP_RIGHT);
-        game.doAction(player1, TOP_RIGHT);
-        game.doAction(player1, TOP_RIGHT);
+//        Player player1 = new Player("Lucas");
+//        Player player2 = new Player("Arthur");
+//
+//        Game game = new Game(player1, player2);
+//
+//        game.setTurn(player1);
+//
+//        game.doAction(player1, TOP_LEFT);
+//        game.doAction(player1, MIDDLE_LEFT);
+//        game.doAction(player1, TOP_CENTER);
+//        game.doAction(player1, MIDDLE_CENTER);
+//        game.doAction(player1, TOP_RIGHT);
+//        game.doAction(player1, TOP_RIGHT);
+//        game.doAction(player1, TOP_RIGHT);
+//        game.doAction(player1, TOP_RIGHT);
+//        game.doAction(player1, TOP_RIGHT);
+//        game.doAction(player1, TOP_RIGHT);
+//        game.doAction(player1, TOP_RIGHT);
+//        game.doAction(player1, TOP_RIGHT);
     }
 }
