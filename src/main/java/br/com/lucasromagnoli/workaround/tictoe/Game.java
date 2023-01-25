@@ -90,7 +90,7 @@ public class Game {
                 .orElse(null);
     }
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        Player player1 = new Player("Lucas");
 //        Player player2 = new Player("Arthur");
 //
@@ -110,5 +110,5 @@ public class Game {
 //        game.doAction(player1, TOP_RIGHT);
 //        game.doAction(player1, TOP_RIGHT);
 //        game.doAction(player1, TOP_RIGHT);
-    }
+//    }
 }

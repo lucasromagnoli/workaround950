@@ -25,16 +25,28 @@ function connectWs() {
 
 function render(game) {
     this.game = game
+    clearAlerts()
+    if (game.winner !== null) {
+        sendAlert(`TEMOS UM VENCEDOR. O MELHOR JOGADOR É O: ${game.winner}`)
+    }
     for (const tile in game.tiles) {
         $(`#${tile}`).html(`${getCharacter(game.tiles[tile])}`)
     }
+}
+
+function sendAlert(message) {
+    $('#alerts').append(`<div class="alert alert-info" role="alert">${message}</div>`)
+}
+
+function clearAlerts() {
+    $('#alerts').html('')
 }
 
 function getCharacter(player) {
     if (player === null)
         return ''
 
-    return player['player_id'] === playerId ? 'X' : 'O'
+    return player['player_id'] === game["player1"] ? 'X' : 'O'
 }
 
 function createGame() {
